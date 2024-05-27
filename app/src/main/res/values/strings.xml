@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PiedPiper</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email_or_username">Email or Username</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="log_in">LOG IN</string>
+    <string name="comment">Comment</string>
+    <string name="this_will_be_our_profile_screen_and_i_want_you_to_respect_it_as_it_is_dont_go_around_making_fun_of_it">THIS WILL BE OUR PROFILE SCREEN AND I WANT YOU TO RESPECT IT AS IT IS DONT GO AROUND MAKING FUN OF IT.</string>
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#455F61"
+    tools:context=".addrecipeFragment">
+
+    <TextView
+        android:id="@+id/Recipepost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-black"
+        android:text="POST RECIPE"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="#FFCFFF"
+        android:textSize="40sp" />
+
+    <EditText
+        android:id="@+id/AddTitle"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/Recipepost"
+        android:layout_marginTop="16dp"
+        android:background="#638782"
+        android:textStyle="bold"
+        android:text="Add the Title"
+        android:textColor="#000000"
+        android:padding="10dp"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/AddDescription"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/AddTitle"
+        android:layout_marginTop="16dp"
+        android:background="#638782"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text="ADD DESCRIPTION"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/AddInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/AddDescription"
+        android:layout_marginTop="16dp"
+        android:background="#638782"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text="ADD INSTRUCTIONS"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/CreateButton"
+        android:layout_width="254dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="76dp"
+        android:layout_marginBottom="7dp"
+        android:background="#FFCFFF"
+        android:text="Post"
+        android:textAlignment="center"
+        android:textSize="35dp" />
+
+
+</RelativeLayout>

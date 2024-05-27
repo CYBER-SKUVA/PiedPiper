@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homepage"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/friendlikes"
+        android:icon="@drawable/baseline_add_alert_24"
+        android:title="Friends" />
+    <item
+        android:id="@+id/addrecipe"
+        android:icon="@drawable/baseline_add_circle_24"
+        android:title="Add" />
+    <item
+        android:id="@+id/mealplans"
+        android:icon="@drawable/baseline_local_grocery_store_24"
+        android:title="Meals" />
+    <item
+        android:id="@+id/profilepage"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="Profile" />
+</menu>
