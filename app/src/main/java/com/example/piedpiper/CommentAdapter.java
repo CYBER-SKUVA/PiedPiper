@@ -20,7 +20,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.commentbar, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item, parent, false);
         return new CommentViewHolder(view);
     }
 
@@ -47,7 +47,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
-            commentUserImage = itemView.findViewById(R.id.commentUserImage);
+            commentUserImage = itemView.findViewById(R.id.userProfileImage);
             commentUserName = itemView.findViewById(R.id.commentUserName);
             commentText = itemView.findViewById(R.id.commentText);
             commentTime = itemView.findViewById(R.id.commentTime);

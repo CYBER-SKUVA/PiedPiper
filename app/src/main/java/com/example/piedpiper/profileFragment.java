@@ -1,64 +1,141 @@
 package com.example.piedpiper;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link profileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.fragment.app.Fragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class profileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView profileUsername, profileName, profileEmail;
+    private String username;
 
     public profileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment profileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static profileFragment newInstance(String param1, String param2) {
-        profileFragment fragment = new profileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        // Get the username from SharedPreferences
+        SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", getContext().MODE_PRIVATE);
+        username = prefs.getString("username", null);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        profileUsername = view.findViewById(R.id.ProfileUsername);
+        profileName = view.findViewById(R.id.Profilename);
+        profileEmail = view.findViewById(R.id.ProfileEmail);
+        Button logoutButton = view.findViewById(R.id.LogoutButton);
+
+        // Fetch user details
+        if (username != null) {
+            new FetchUserProfileTask().execute(username);
+        }
+
+        logoutButton.setOnClickListener(v -> logout());
+
+        return view;
+    }
+
+    private class FetchUserProfileTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String username = params[0];
+            String result = "";
+
+            try {
+                URL url = new URL("https://lamp.ms.wits.ac.za/home/s2678460/get_profile.php"); // Replace with your PHP script URL
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setDoOutput(true);
+
+                // Prepare data
+                String postData = "username=" + username;
+
+                // Send data
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                // Get the response
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                result = response.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            try {
+                JSONObject jsonResponse = new JSONObject(result);
+                String status = jsonResponse.getString("status");
+                if (status.equals("success")) {
+                    String fullName = jsonResponse.getString("fullname");
+                    String email = jsonResponse.getString("email");
+
+                    profileUsername.setText(username);
+                    profileName.setText(fullName);
+                    profileEmail.setText(email);
+                } else {
+                    Toast.makeText(getActivity(), "Failed to fetch user details", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), "Error parsing server response", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void logout() {
+        // Clear SharedPreferences
+        SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", getContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+
+        // Redirect to LoginActivity
+        Intent intent = new Intent(getActivity(), loginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

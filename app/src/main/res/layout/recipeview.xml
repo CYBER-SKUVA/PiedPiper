@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#465F61"
+        android:background="@drawable/back_1"
         android:padding="16dp">
 
         <ImageView
@@ -21,7 +21,6 @@
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
             android:contentDescription="image_of_recipe"
-            app:layout_constraintBottom_toTopOf="@+id/someline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -30,6 +29,7 @@
             android:id="@+id/NameofUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -42,13 +42,13 @@
             android:id="@+id/UserNameofUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:paddingStart="8dp"
             android:textColor="@color/black"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/NameofUser"
-            app:layout_constraintTop_toBottomOf="@id/NameofUser"
+            app:layout_constraintTop_toBottomOf="@+id/NameofUser"
             tools:text="UserName" />
 
         <View
@@ -75,18 +75,6 @@
             tools:text="Title" />
 
         <TextView
-            android:id="@+id/recipedesc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipetitle"
-            tools:text="Description of our recipe" />
-
-        <TextView
             android:id="@+id/ingredients"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -95,13 +83,14 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipedesc"
+            app:layout_constraintTop_toBottomOf="@id/recipetitle"
             tools:text="Ingredients" />
 
         <TextView
             android:id="@+id/recipeIns"
-            android:layout_width="374dp"
-            android:layout_height="99dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
@@ -133,6 +122,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timeposted">
 
+            <TextView
+                android:id="@+id/likesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="16sp" />
+
             <Button
                 android:id="@+id/lovebutton"
                 android:layout_width="48dp"
@@ -148,171 +146,10 @@
                 android:layout_marginStart="16dp"
                 android:background="@android:drawable/sym_action_chat"
                 android:contentDescription="Comment Button"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
-
-
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#465F61"
-            android:padding="16dp">
-
-            <ImageView
-                android:id="@+id/imageviewer"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:contentDescription="image_of_recipe"
-                app:layout_constraintBottom_toTopOf="@+id/someline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/NameofUser"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageviewer"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Name" />
-
-            <TextView
-                android:id="@+id/UserNameofUser"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/black"
-                android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/NameofUser"
-                app:layout_constraintTop_toBottomOf="@id/NameofUser"
-                tools:text="UserName" />
-
-            <View
-                android:id="@+id/someline"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#390D0D"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageviewer" />
-
-            <TextView
-                android:id="@+id/recipetitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/someline"
-                tools:text="Title" />
-
-            <TextView
-                android:id="@+id/recipedesc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recipetitle"
-                tools:text="Description of our recipe" />
-
-
-            <TextView
-                android:id="@+id/ingredients"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recipedesc"
-                tools:text="Ingredients" />
-
-            <TextView
-                android:id="@+id/recipeIns"
-                android:layout_width="374dp"
-                android:layout_height="99dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:padding="17dp"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ingredients"
-                tools:text="Instructions on the recipe" />
-
-            <TextView
-                android:id="@+id/timeposted"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recipeIns"
-                tools:text="Time posted" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeposted">
-
-                <Button
-                    android:id="@+id/lovebutton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/heart"
-                    android:contentDescription="Love Button"
-                    tools:ignore="ContentDescription" />
-
-                <Button
-                    android:id="@+id/commentbutton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@android:drawable/sym_action_chat"
-                    android:onClick="comments"
-                    android:contentDescription="Comment Button"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-    -->

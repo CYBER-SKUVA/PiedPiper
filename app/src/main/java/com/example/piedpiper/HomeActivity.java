@@ -1,5 +1,6 @@
 package com.example.piedpiper;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
+        String username = getIntent().getStringExtra("username");
+
+        // Save username in SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("username", username);
+        editor.apply();
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.homepage) {
@@ -35,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
             }
             return true;
         });
+
+
     }
 
     private void replaceFragment(Fragment fragment) {

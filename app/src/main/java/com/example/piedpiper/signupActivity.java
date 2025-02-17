@@ -57,7 +57,8 @@ public class signupActivity extends AppCompatActivity {
                             // Call AsyncTask to send sign-up data to PHP script
                             new SignupTask().execute(fullname, username, email, password);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Password must meet criteria", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "\n" +
+                                    "The password must contain at least one digit, one lowercase letter, one uppercase letter, and one special character", Toast.LENGTH_LONG).show();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();

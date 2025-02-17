@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/heart_filled"
-        android:label="@string/app_name"
+        android:label="Munch"
         android:roundIcon="@drawable/back_3"
         android:supportsRtl="true"
         android:theme="@style/Theme.PiedPiper"
         tools:targetApi="31">
         <activity
-            android:name=".Comment"
+            android:name=".FriendsAdapter"
             android:exported="false" />
         <activity
-            android:name=".commentActivity"
+            android:name=".MultiSelectSpinnerAdapter"
             android:exported="false" />
+        <activity
+            android:name=".Comment"
+            android:exported="false" />
+        <activity android:name=".commentActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

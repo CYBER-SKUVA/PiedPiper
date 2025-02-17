@@ -1,70 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".CommentActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:title="Comments"
-        android:titleTextColor="@android:color/white"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:padding="8dp"
-        tools:listitem="@layout/commentbar" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
 
     <LinearLayout
-        android:id="@+id/commentInputSection"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:background="@android:color/white"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_vertical">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/userProfileImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/profile"
-            android:contentDescription="User Profile Image"
-            android:scaleType="centerCrop"
-            android:background="@color/white" />
+            android:src="@drawable/profile" />
 
         <EditText
             android:id="@+id/editTextComment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Add a comment..."
-            android:background="@null"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
+            android:hint="Add a comment..." />
 
         <Button
             android:id="@+id/buttonPostComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Post"
-            android:background="@android:color/transparent"
-            android:textColor="@color/design_default_color_primary"
-            android:padding="8dp"
             android:enabled="false" />
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

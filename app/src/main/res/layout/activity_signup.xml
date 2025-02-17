@@ -28,14 +28,14 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:background="@android:drawable/dialog_holo_dark_frame"
+            android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/name"
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Full name"
             android:inputType="textPersonName"
             android:padding="16dp"
-            android:textColorHint="#FFFFFF" />
+            android:textColorHint="#00BFA5" />
 
         <EditText
             android:id="@+id/username"
@@ -44,14 +44,14 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:background="@color/material_dynamic_primary20"
+            android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/name"
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
             android:padding="16dp"
-            android:textColorHint="#FFFFFF" />
+            android:textColorHint="#00BFA5" />
 
         <EditText
             android:id="@+id/email"
@@ -60,14 +60,14 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:background="@color/material_dynamic_primary20"
+            android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/email"
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:padding="16dp"
-            android:textColorHint="#FFFFFF" />
+            android:textColorHint="#00BFA5" />
 
         <EditText
             android:id="@+id/password"
@@ -76,14 +76,14 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:background="@color/material_dynamic_primary20"
+            android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/password"
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:textColorHint="#FFFFFF" />
+            android:textColorHint="#00BFA5" />
 
         <EditText
             android:id="@+id/confrimpass"
@@ -92,14 +92,14 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:background="@color/material_dynamic_primary20"
+            android:background="@drawable/rounded_text"
             android:drawableStart="@drawable/password"
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Confirm Password"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:textColorHint="#FFFFFF" />
+            android:textColorHint="#00BFA5" />
 
         <Button
             android:id="@+id/signup"
@@ -108,9 +108,9 @@
             android:layout_margin="10dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:background="#FF6F61AA"
+            android:background="@drawable/rounded_text"
             android:text="Signup"
-            android:textColor="#FFFFFF"
+            android:textColor="#00BFA5"
             android:textSize="18sp"
             android:onClick="startSignupActivity"
             android:textStyle="bold" />
@@ -128,7 +128,7 @@
         android:fontFamily="sans-serif-black"
         android:text="SIGN UP"
         android:textAlignment="center"
-        android:textColor="#FFFFF8"
+        android:textColor="#00BFA5"
         android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

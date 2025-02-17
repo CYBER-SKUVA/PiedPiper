@@ -1,5 +1,6 @@
 package com.example.piedpiper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class loginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     // AsyncTask to handle network operation in background thread
     private class LoginTask extends AsyncTask<String, Void, String> {
@@ -105,10 +108,11 @@ public class loginActivity extends AppCompatActivity {
                 if (status.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(loginActivity.this, HomeActivity.class);
+                    intent.putExtra("username", L_username.getText().toString().trim());
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Credentials could not be verified", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Wrong password or username!", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -128,4 +132,6 @@ public class loginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

@@ -1,64 +1,183 @@
 package com.example.piedpiper;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link mealplanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class mealplanFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private final List<ListItem> mealOptions = new ArrayList<>();
+    private ArrayAdapter<ListItem> adapter;
+    private Spinner[] breakfastSpinners;
+    private Spinner[] lunchSpinners;
+    private Spinner[] dinnerSpinners;
+    private Button generateListButton;
+    private ListView groceryListView;
+    private List<String> groceryList = new ArrayList<>();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public mealplanFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment mealplanFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static mealplanFragment newInstance(String param1, String param2) {
-        mealplanFragment fragment = new mealplanFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_mealplan, container, false);
+
+        breakfastSpinners = new Spinner[7];
+        lunchSpinners = new Spinner[7];
+        dinnerSpinners = new Spinner[7];
+
+        for (int i = 0; i < 7; i++) {
+            String dayName = getDayName(i);
+            int breakfastId = getResources().getIdentifier("breakfast_spinner_" + dayName.toLowerCase(), "id", requireActivity().getPackageName());
+            breakfastSpinners[i] = view.findViewById(breakfastId);
+            int lunchId = getResources().getIdentifier("lunch_spinner_" + dayName.toLowerCase(), "id", requireActivity().getPackageName());
+            lunchSpinners[i] = view.findViewById(lunchId);
+            int dinnerId = getResources().getIdentifier("dinner_spinner_" + dayName.toLowerCase(), "id", requireActivity().getPackageName());
+            dinnerSpinners[i] = view.findViewById(dinnerId);
+
+            setupSpinner(breakfastSpinners[i], dayName, "Breakfast");
+            setupSpinner(lunchSpinners[i], dayName, "Lunch");
+            setupSpinner(dinnerSpinners[i], dayName, "Dinner");
         }
+
+        return view;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mealplan, container, false);
+    private void setupSpinner(Spinner spinner, String day, String mealType) {
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mealOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        fetchRecipes(day, mealType, spinner);
+    }
+
+    private String getDayName(int dayIndex) {
+        String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        return days[dayIndex];
+    }
+
+
+
+    private void fetchRecipes(String day, String mealType, Spinner spinner) {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://lamp.ms.wits.ac.za/home/s2678460/get_recipes.php?day=" + day + "&meal_type=" + mealType;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                showToast("Failed to fetch data");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonData = response.body().string();
+                    try {
+                        JSONArray jsonArray = new JSONArray(jsonData);
+                        mealOptions.clear();
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String recipeTitle = jsonObject.getString("title");
+                            ListItem item = new ListItem(recipeTitle);
+                            mealOptions.add(item);
+                        }
+
+                        getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        showToast("Error parsing JSON");
+                    }
+                } else {
+                    showToast("Error: " + response.code());
+                }
+            }
+        });
+    }
+
+    private void generateGroceryList() {
+        groceryList.clear();
+
+
+       /* addIngredientsToList(breakfastSpinner.getSelectedItem());
+        addIngredientsToList(lunchSpinner.getSelectedItem());
+        addIngredientsToList(dinnerSpinner.getSelectedItem()); */
+
+        // Fetch all ingredients from the database
+        fetchIngredients();
+
+        // Display the grocery list
+        ArrayAdapter<String> groceryAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, groceryList);
+        groceryListView.setAdapter(groceryAdapter);
+    }
+
+
+    private void fetchIngredients() {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://lamp.ms.wits.ac.za/home/s2678460/get_Ing.php";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonData = response.body().string();
+                    try {
+                        JSONArray jsonArray = new JSONArray(jsonData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String name = jsonObject.getString("ing_name");
+                            Log.d("Ingredient", name); // Output each ingredient to logcat
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("Fetch Ingredients", "Response not successful");
+                }
+            }
+        });
+    }
+
+
+
+    private void showToast(String message) {
+        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
     }
 }
